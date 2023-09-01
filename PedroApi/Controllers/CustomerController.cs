@@ -21,7 +21,7 @@ namespace PedroApi.Controllers
         }
 
         [HttpGet("{customerId}")]
-        public CustomerGet Get(int customerId)
+        public CustomerGet Get(long customerId)
         {
             var customerData = _customerService.FindCustomer(customerId);
             CustomerGet customerResponse = new CustomerGet();

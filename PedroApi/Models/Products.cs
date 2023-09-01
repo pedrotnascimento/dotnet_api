@@ -13,7 +13,7 @@ namespace PedroApi.Models
 
         public long ProductId { get; set; }
         public string Name { get; set; }
-        public byte[] Price { get; set; }
+        public float Price { get; set; }
         public long Quantity { get; set; }
 
         public virtual ICollection<OrderProducts> OrderProducts { get; set; }
