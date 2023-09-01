@@ -1,4 +1,6 @@
-﻿using PedroApi.Models;
+﻿using AutoMapper;
+using PedroApi.DTO;
+using PedroApi.Models;
 using PedroApi.Repositories;
 
 namespace PedroApi.Services
@@ -6,15 +8,20 @@ namespace PedroApi.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
         public ProductService(
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _productRepository = productRepository;
         }
-        public Products? FindProduct(long productId)
+
+        public ProductDto? FindProduct(long productId)
         {
-            return _productRepository.FindOne(productId);
+            var product = _productRepository.FindOne(productId);
+            return _mapper.Map<ProductDto>(product);
         }
     }
 }

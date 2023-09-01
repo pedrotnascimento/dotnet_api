@@ -1,9 +1,10 @@
-﻿using PedroApi.Models;
+﻿using PedroApi.DTO;
+using PedroApi.Models;
 
 namespace PedroApi.Services
 {
     public interface IProductService
     {
-        Products? FindProduct(long productId);
+        ProductDto? FindProduct(long productId);
     }
 }

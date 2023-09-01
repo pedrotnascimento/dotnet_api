@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PedroApi.DTO;
+using PedroApi.ViewModels;
 using PedroApi.Services;
+using AutoMapper;
 
 namespace PedroApi.Controllers
 {
@@ -10,12 +11,15 @@ namespace PedroApi.Controllers
     {
 
         private readonly ILogger<ProductController> _logger;
+        private readonly IMapper _mapper;
         private readonly IProductService _productService;
 
         public ProductController(
             ILogger<ProductController> logger,
-            IProductService productService)
+            IProductService productService,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _logger = logger;
             _productService = productService;
         }
@@ -25,13 +29,11 @@ namespace PedroApi.Controllers
         {
             var productData = _productService.FindProduct(productId);
             ProductGet productResponse = new ProductGet();
-            if (productData != null)
+            if(productData != null)
             {
-                productResponse.ProductId = productData.ProductId;
-                productResponse.Name = productData.Name;
-                productResponse.Price = productData.Price;
-                productResponse.Quantity = productData.Quantity;
+                productResponse  = _mapper.Map<ProductGet>(productData);
             }
+            
             return productResponse;
         }
     }

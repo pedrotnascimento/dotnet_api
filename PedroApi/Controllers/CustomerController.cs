@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PedroApi.DTO;
+using PedroApi.ViewModels;
 using PedroApi.Services;
+using AutoMapper;
 
 namespace PedroApi.Controllers
 {
@@ -8,14 +9,17 @@ namespace PedroApi.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-
+        private readonly IMapper _mapper;
         private readonly ILogger<CustomerController> _logger;
         private readonly ICustomerService _customerService;
 
         public CustomerController(
             ILogger<CustomerController> logger,
-            ICustomerService customerService)
+            ICustomerService customerService,
+            IMapper mapper
+            )
         {
+            _mapper = mapper;
             _logger = logger;
             _customerService = customerService;
         }
@@ -27,9 +31,7 @@ namespace PedroApi.Controllers
             CustomerGet customerResponse = new CustomerGet();
             if (customerData != null)
             {
-                customerResponse.CustomerId = customerData.CustomerId;
-                customerResponse.Name = customerData.Name;
-                customerResponse.Balance = customerData.Balance;
+                customerResponse = _mapper.Map<CustomerGet>(customerData);
             }
             return customerResponse;
         }

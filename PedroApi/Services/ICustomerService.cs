@@ -1,9 +1,10 @@
-﻿using PedroApi.Models;
+﻿using PedroApi.DTO;
+using PedroApi.Models;
 
 namespace PedroApi.Services
 {
     public interface ICustomerService
     {
-        Customers? FindCustomer(long customerId);
+        CustomerDto? FindCustomer(long customerId);
     }
 }

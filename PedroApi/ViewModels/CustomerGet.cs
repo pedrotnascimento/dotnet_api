@@ -1,4 +1,4 @@
-﻿namespace PedroApi.DTO
+﻿namespace PedroApi.ViewModels
 {
     public class CustomerGet
     {

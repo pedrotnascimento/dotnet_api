@@ -1,20 +1,26 @@
-﻿using PedroApi.Models;
+﻿using AutoMapper;
+using PedroApi.DTO;
+using PedroApi.Models;
 using PedroApi.Repositories;
 
 namespace PedroApi.Services
 {
     public class CustomerService : ICustomerService
     {
+        private readonly IMapper _mapper;
         private readonly ICustomerRepository _customerRepository;
 
         public CustomerService(
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _customerRepository = customerRepository;
         }
-        public Customers? FindCustomer(long customerId)
+        public CustomerDto? FindCustomer(long customerId)
         {
-            return _customerRepository.FindOne(customerId);
+            var customer = _customerRepository.FindOne(customerId);
+            return _mapper.Map<CustomerDto>(customer);
         }
     }
 }
