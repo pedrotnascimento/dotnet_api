@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using PedroApi.ViewModels;
 using PedroApi.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PedroApi.Controllers
 {
@@ -25,15 +25,21 @@ namespace PedroApi.Controllers
         }
 
         [HttpGet("{customerId}")]
-        public CustomerGet Get(long customerId)
+        public ActionResult<CustomerGet> Get(long customerId)
         {
-            var customerData = _customerService.FindCustomer(customerId);
-            CustomerGet customerResponse = new CustomerGet();
-            if (customerData != null)
+            try
             {
-                customerResponse = _mapper.Map<CustomerGet>(customerData);
+                var customerData = _customerService.FindCustomer(customerId);
+                CustomerGet customerResponse = new CustomerGet();
+                if (customerData != null)
+                {
+                    customerResponse = _mapper.Map<CustomerGet>(customerData);
+                }
+                return new OkObjectResult(customerResponse);
             }
-            return customerResponse;
+            catch (Exception ex) { 
+                throw new System.Web.Http.HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

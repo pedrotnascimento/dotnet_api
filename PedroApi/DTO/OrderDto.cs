@@ -1,12 +1,10 @@
-﻿#nullable disable
-using System;
-using System.Collections.Generic;
+﻿using PedroApi.Models;
 
-namespace PedroApi.Models
+namespace PedroApi.DTO
 {
-    public partial class Orders
+    public class OrderDto
     {
-        public Orders()
+        public OrderDto()
         {
             OrderProducts = new HashSet<OrderProducts>();
         }
@@ -15,15 +13,16 @@ namespace PedroApi.Models
         public DateTime OrderDate { get; set; }
         public long CustomerId { get; set; }
 
-        public virtual Customers Customer { get; set; }
+        public virtual CustomerDto Customer { get; set; }
         public virtual ICollection<OrderProducts> OrderProducts { get; set; }
 
 
         public double GetTotalCost()
         {
-            var totalCost = OrderProducts.Select(x=> x.Quantity*x.Product.Price).Sum();
+            var totalCost = OrderProducts.Select(x => x.Quantity * x.Product.Price).Sum();
             return totalCost;
 
         }
+
     }
 }

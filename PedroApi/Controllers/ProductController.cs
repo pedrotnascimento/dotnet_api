@@ -25,16 +25,23 @@ namespace PedroApi.Controllers
         }
 
         [HttpGet("{productId}")]
-        public ProductGet Get(long productId)
+        public ActionResult<ProductGet> Get(long productId)
         {
-            var productData = _productService.FindProduct(productId);
-            ProductGet productResponse = new ProductGet();
-            if(productData != null)
+            try
             {
-                productResponse  = _mapper.Map<ProductGet>(productData);
+
+                var productData = _productService.FindProduct(productId);
+                ProductGet productResponse = new ProductGet();
+                if (productData != null)
+                {
+                    productResponse = _mapper.Map<ProductGet>(productData);
+                }
+                return new OkObjectResult(productResponse);
             }
-            
-            return productResponse;
+            catch (Exception ex)
+            {
+                throw new System.Web.Http.HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

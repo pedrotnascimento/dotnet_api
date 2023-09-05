@@ -13,6 +13,8 @@ namespace PedroApi
             CreateMap<Products, ProductDto>();
             CreateMap<ProductDto, ProductGet>();
             CreateMap<CustomerDto, CustomerGet>();
+            CreateMap<Orders, OrderDto>();
+            CreateMap<OrderProducts, OrderProductDto>();
         }
     }
 }
